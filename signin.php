@@ -12,32 +12,32 @@ $dbname = "forum";
 
 $conn = mysqli_connect($servername,$username,$password,$dbname);
 
-if (!$conn) {
+if (mysqli_connect_errno()) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$pwd_q = "SELECT password FROM users WHERE username = '".$USER."' ";
-$result = mysqli_query($conn,$pwd_q);
-
+$query = "SELECT password FROM users WHERE username = '${USER}';";
+$result = mysqli_query($conn,$query);
 if (!$result) {
-	die("Failed to access account :(<br>");
+	die("Failed to access account :(");
 }
 
 $options = [
     'cost' => 8,
 ];
-$USER = mysqli_real_escape_string($conn,$USER);
 $HASH = password_hash($PASS,PASSWORD_BCRYPT,$options);
-echo($result);
+
 
 if ($result != $HASH) {
-	die("Incorrect info.");
+	die("Incorrect info: ${HASH}, ${RESULT}, ${query}");
 } else {
 	$key = "icadet_username";
 	setcookie($key,$USER,time() + (86400 * 30),"/");
 	mysqli_close($conn);
-	header("Location: http://localhost/forum");
 	exit();
 }
 mysqli_close($conn);
+echo("
+<a href='http://localhost/forum/'>Return Home</a>
+");
 ?>

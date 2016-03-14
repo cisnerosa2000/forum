@@ -25,11 +25,14 @@ $options = [
 $USER = mysqli_real_escape_string($conn,$USER);
 $HASH = password_hash($pass,PASSWORD_BCRYPT,$options);
 
-$query = "INSERT INTO users (username, password) VALUES ('".$USER."','".$HASH."');";
+$query = "INSERT INTO users (username, password) VALUES ('${USER}','${PASS}');";
 $insert = mysqli_query($conn,$query);
 
 $key = "icadet_username";
 setcookie($key,$USER,time() + (86400 * 30),"/");
 mysqli_close($conn);
+echo("
+<a href='http://localhost/forum/'>Return Home</a>
+");
 ?>
 <html>
