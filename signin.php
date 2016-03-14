@@ -27,14 +27,13 @@ $options = [
 ];
 $HASH = password_hash($PASS,PASSWORD_BCRYPT,$options);
 
+$oldpass = mysqli_fetch_assoc($result)['password'];
 
-if ($result != $HASH) {
-	die("Incorrect info: ${HASH}, ${RESULT}, ${query}");
+if ($oldpass != $HASH) {
+	die("Incorrect info: ${HASH}, ${oldpass}, ${query}");
 } else {
 	$key = "icadet_username";
 	setcookie($key,$USER,time() + (86400 * 30),"/");
-	mysqli_close($conn);
-	exit();
 }
 mysqli_close($conn);
 echo("

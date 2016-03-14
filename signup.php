@@ -25,7 +25,7 @@ $options = [
 $USER = mysqli_real_escape_string($conn,$USER);
 $HASH = password_hash($pass,PASSWORD_BCRYPT,$options);
 
-$query = "INSERT INTO users (username, password) VALUES ('${USER}','${PASS}');";
+$query = "INSERT INTO users (username, password) VALUES ('${USER}','${HASHt}');";
 $insert = mysqli_query($conn,$query);
 
 $key = "icadet_username";
