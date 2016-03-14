@@ -1,4 +1,3 @@
-<html>
 <?php
 if ($_POST['username'] && $_POST['password']) {
 	$USER = $_POST['username'];
@@ -6,7 +5,6 @@ if ($_POST['username'] && $_POST['password']) {
 } else {
 	die('Incomplete Information');
 }
-
 $servername = "192.168.1.11";
 $username = "cisnerosa";
 $password = "listentothesoundofmyvoice";
@@ -18,23 +16,28 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+$pwd_q = "SELECT password FROM users WHERE username = '".$USER."' ";
+$result = mysqli_query($conn,$pwd_q);
+
+if (!$result) {
+	die("Failed to access account :(<br>");
+}
+
 $options = [
     'cost' => 8,
 ];
-
 $USER = mysqli_real_escape_string($conn,$USER);
-$HASH = password_hash($pass,PASSWORD_BCRYPT,$options);
+$HASH = password_hash($PASS,PASSWORD_BCRYPT,$options);
+echo($result);
 
-$query = "INSERT INTO users (username, password) VALUES ('".$USER."','".$HASH."');";
-$insert = mysqli_query($conn,$query);
-if (!$insert) {
-	echo "Failed to create account :(<br>";
+if ($result != $HASH) {
+	die("Incorrect info.");
 } else {
-	echo "Successful Account Creation!<br>";
+	$key = "icadet_username";
+	setcookie($key,$USER,time() + (86400 * 30),"/");
+	mysqli_close($conn);
+	header("Location: http://localhost/forum");
+	exit();
 }
-
-$key = "icadet_username";
-setcookie($key,$USER,time() + (86400 * 30),"/");
 mysqli_close($conn);
 ?>
-<html>
