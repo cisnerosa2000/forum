@@ -5,7 +5,7 @@ if ($_POST['username'] && $_POST['password']) {
 } else {
 	die('Incomplete Information');
 }
-$servername = "192.168.1.11";
+$servername = "172.25.51.194";
 $username = "cisnerosa";
 $password = "listentothesoundofmyvoice";
 $dbname = "forum";

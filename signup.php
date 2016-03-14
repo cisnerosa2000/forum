@@ -7,7 +7,7 @@ if ($_POST['username'] && $_POST['password']) {
 	die('Incomplete Information');
 }
 
-$servername = "192.168.1.11";
+$servername = "172.25.51.194";
 $username = "cisnerosa";
 $password = "listentothesoundofmyvoice";
 $dbname = "forum";
@@ -27,11 +27,6 @@ $HASH = password_hash($pass,PASSWORD_BCRYPT,$options);
 
 $query = "INSERT INTO users (username, password) VALUES ('".$USER."','".$HASH."');";
 $insert = mysqli_query($conn,$query);
-if (!$insert) {
-	echo "Failed to create account :(<br>";
-} else {
-	echo "Successful Account Creation!<br>";
-}
 
 $key = "icadet_username";
 setcookie($key,$USER,time() + (86400 * 30),"/");
